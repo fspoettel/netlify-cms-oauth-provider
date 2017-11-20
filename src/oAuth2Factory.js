@@ -8,18 +8,23 @@ function getSettingsForProvider (provider) {
     GIT_HOSTNAME,
     OAUTH_AUTHORIZE_PATH,
     OAUTH_TOKEN_PATH,
+    REDIRECT_URL,
     SCOPES
   } = process.env
 
+  const isBitbucket = provider === 'bitbucket'
+  const isGitLab = provider === 'gitlab'
+
   let defaultSettings = GITHUB_SETTINGS
 
-  if (provider === 'gitlab') {
+  if (isGitLab) {
     defaultSettings = GITLAB_SETTINGS
-  } else if (provider === 'bitbucket') {
+  } else if (isBitbucket) {
     defaultSettings = BITBUCKET_SETTINGS
   }
 
   return {
+    redirectUri: isBitbucket ? null : REDIRECT_URL,
     tokenHost: GIT_HOSTNAME || defaultSettings.GIT_HOSTNAME,
     tokenPath: OAUTH_TOKEN_PATH || defaultSettings.OAUTH_TOKEN_PATH,
     scopes: SCOPES || defaultSettings.SCOPES,
@@ -35,17 +40,16 @@ function oAuth2Factory () {
   const {
     OAUTH_CLIENT_ID,
     OAUTH_CLIENT_SECRET,
-    PROVIDER,
-    REDIRECT_URL
+    PROVIDER
   } = process.env
 
-  const redirectUri = REDIRECT_URL
   const provider = PROVIDER || DEFAULT_PROVIDER
 
   const {
     authorizePath,
     tokenHost,
     tokenPath,
+    redirectUri,
     scopes
   } = getSettingsForProvider(provider)
 
@@ -61,7 +65,7 @@ function oAuth2Factory () {
     }
   }
 
-  return new OAuth2Client(credentials, redirectUri, scopes, provider)
+  return new OAuth2Client(provider, credentials, redirectUri, scopes)
 }
 
 module.exports = oAuth2Factory

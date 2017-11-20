@@ -12,21 +12,21 @@ const BITBUCKET_SETTINGS = {
   GIT_HOSTNAME: 'https://bitbucket.org',
   OAUTH_AUTHORIZE_PATH: '/site/oauth2/authorize',
   OAUTH_TOKEN_PATH: '/site/oauth2/access_token',
-  SCOPES: 'repo,user'
+  SCOPES: null // implicit 'account,repository,repository:write,repository:admin,pullrequest,pullrequest:write'
 }
 
 const GITHUB_SETTINGS = {
   GIT_HOSTNAME: 'https://github.com',
   OAUTH_AUTHORIZE_PATH: '/login/oauth/authorize',
-  OAUTH_TOKEN_PATH: '/login/oauth/token',
+  OAUTH_TOKEN_PATH: '/login/oauth/access_token',
   SCOPES: 'repo,user'
 }
 
 const GITLAB_SETTINGS = {
   GIT_HOSTNAME: 'https://gitlab.com',
-  OAUTH_AUTHORIZE_PATH: '/login/oauth/authorize',
-  OAUTH_TOKEN_PATH: '/login/oauth/access_token',
-  SCOPES: 'repo,user'
+  OAUTH_AUTHORIZE_PATH: '/oauth/authorize',
+  OAUTH_TOKEN_PATH: '/oauth/token',
+  SCOPES: 'api'
 }
 
 module.exports = {
