@@ -16,6 +16,11 @@ class OAuth2Client {
     }
   }
 
+  getProvider () {
+    const { provider } = this.config
+    return provider
+  }
+
   /**
    * Return authorizeUrl to initiate oAuth-flow
    * @return {String} url that will be redirected to
@@ -41,18 +46,18 @@ class OAuth2Client {
 
     try {
       const result = await authorizationCode.getToken({ code, redirect_uri })
+      message = CMS_MESSAGE_SUCCESS
       content = {
         token: accessToken.create(result),
-        provider: provider
+        provider
       }
-      message = CMS_MESSAGE_SUCCESS
     } catch (error) {
       console.error('Access Token Error', error.message)
-      content = error
       message = CMS_MESSAGE_ERROR
+      content = error
     }
 
-    return { message, content }
+    return { content, message }
   }
 }
 

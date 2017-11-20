@@ -4,7 +4,7 @@
       console.log("receiveMessage %o", e)
 
       window.opener.postMessage(
-        'authorization:github:{{{message}}}:{{{content}}}',
+        'authorization:{{{provider}}}:{{{message}}}:{{{content}}}',
         e.origin
       )
 
@@ -12,8 +12,8 @@
     }
 
     window.addEventListener("message", receiveMessage, false)
-    console.log("Sending message: %o", "github")
+    console.log("Sending message: %o", "{{{provider}}}")
 
-    window.opener.postMessage("authorizing:github", window.origin)
+    window.opener.postMessage("authorizing:{{{provider}}}", window.origin)
     })()
 </script>
