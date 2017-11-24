@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "redis-server /usr/local/etc/redis.conf & nodemon index.js",
     "start": "node index.js"
   },
   "keywords": [
@@ -19,10 +20,13 @@
   "author": "Vaclav Klecanda <vencax77@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "connect-redis": "^3.3.2",
     "dotenv": "^2.0.0",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "randomstring": "^1.1.5",
+    "express-session": "^1.15.6",
+    "redis": "^2.8.0",
     "simple-oauth2": "^1.2.0"
   },
   "devDependencies": {
