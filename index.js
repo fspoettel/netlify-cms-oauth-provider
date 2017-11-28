@@ -2,12 +2,15 @@ require('dotenv').config({ silent: true })
 
 const express = require('express')
 const exphbs = require('express-handlebars')
-const oAuth2Factory = require('./src/oAuth2Factory')
-const { LABELS } = require('./src/constants')
+const oAuth2Factory = require('./lib/oAuth/factory')
+const session = require('./lib/middlewares/session')
+const { LABELS } = require('./lib/oAuth/config')
 
 const app = express()
 
 app.use(express.static('public'))
+
+app.use(session)
 
 const hbs = exphbs.create({
   defaultLayout: 'main',
@@ -18,7 +21,6 @@ app.engine('.hbs', hbs.engine)
 app.set('view engine', '.hbs')
 
 const oAuth2 = oAuth2Factory()
-const authorizationUri = oAuth2.authorizeUrl()
 
 app.get('/', (req, res) => {
   const providerLabel = LABELS[oAuth2.getProvider()]
@@ -30,16 +32,18 @@ app.get('/', (req, res) => {
 })
 
 app.get('/auth', (req, res) => {
-  res.redirect(authorizationUri)
+  const { session } = req
+  res.redirect(oAuth2.authorizeUrl(session.id))
 })
 
 app.get('/callback', (req, res) => {
-  const { query } = req
+  const { query, session } = req
 
   const renderCallback = ({ content, message }) => {
     const provider = oAuth2.getProvider()
+    session.destroy()
 
-    return res.render('callback', {
+    res.render('callback', {
       content: JSON.stringify(content),
       message,
       provider,
@@ -47,11 +51,8 @@ app.get('/callback', (req, res) => {
     })
   }
 
-  return oAuth2.accessToken(query).then(renderCallback)
+  return oAuth2.accessToken(session.id, query).then(renderCallback)
 })
 
 const port = process.env.PORT || 3000
-
-app.listen(port, () => {
-  console.log(`gandalf is walkin' on port ${port}`)
-})
+app.listen(port, () => { console.log(`Running on ${port}`) })
