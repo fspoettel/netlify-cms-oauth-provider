@@ -4,11 +4,11 @@
 
 ## Features
 
-* Support for Github, Github Enterprise, ~~Gitlab~~ <span style="color:red">\*</span> & ~~Bitbucket~~ <span style="color:red">\*</span> out-of-the-box
+* Support for Github, Github Enterprise, ~~Gitlab~~ \* & ~~Bitbucket~~ \* out-of-the-box
 * Protection against CSRF attacks via Redis-backed sessions
 
 
-<span style="color:red">\*</span> netlify-cms support for these is pending
+\* netlify-cms support for these is pending
 
 ## Configuring oAuth provider
 
