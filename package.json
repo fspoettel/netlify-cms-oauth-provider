@@ -1,11 +1,11 @@
 {
-  "name": "netlify-cms-github-oauth-provider",
-  "version": "1.0.0",
+  "name": "netlify-cms-oauth-provider",
+  "version": "2.0.0",
   "engines": {
     "node": ">=8"
   },
-  "description": "netlify oauth github client sending token in form as netlify service itself",
-  "repository": "https://github.com/vencax/netlify-cms-github-oauth-provider",
+  "description": "custom oAuth client for netlify-cms",
+  "repository": "https://github.com/fspoettel/netlify-cms-oauth-provider",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -17,7 +17,7 @@
     "cms",
     "auth"
   ],
-  "author": "Vaclav Klecanda <vencax77@gmail.com>",
+  "author": "Felix Spöttel <hi@felics.me>",
   "license": "MIT",
   "jest": {
     "testEnvironment": "node"
